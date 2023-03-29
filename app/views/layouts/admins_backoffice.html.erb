@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application' %>
+    <%= stylesheet_link_tag 'admins_backoffice' %>
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col menu_fixed">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gerenciar</span></a>
+              
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <%= link_to image_tag(avatar_url, alt:"...", class:"img-profile rounded-circle", style:"width: 60px", id: "imgAvatarMd"), '#', "data-toggle":"modal", "data-target":"#avatarModal" %>
+              </div>
+              <div class="profile_info">
+                <span>Bem vindo,</span>
+                <h2><%= current_admin.email %></h2>
+              </div>
+            </div>
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <ul class="nav side-menu">
+                  <li>
+                    <%= link_to admins_backoffice_welcome_index_path do%>
+                      <i class="fa fa-home"></i> Dashboard (em construcao)
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to admins_backoffice_admins_municipes_path do%>
+                      <i class="fa fa-globe"></i> Municipes
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to admins_backoffice_edit_admin_path(current_admin) do %>
+                      <i class="fa fa-user"></i> Editar perfil
+                    <% end %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <div class="nav toggle">
+              <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+            <nav class="nav navbar-nav">
+              <ul class=" navbar-right">
+                <li class="nav-item dropdown open" style="padding-left: 15px;">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                    <%= image_tag(avatar_url, alt: '', class:"img-profile rounded-circle", id: "imgAvatarSm") %>
+                    <span>Admin</span>
+                  </a>
+                  <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                    <%= link_to destroy_admin_session_path, method: :delete do %>
+                      <i class="fa fa-sign-out pull-right"></i>
+                      <span>Sair</span>
+                    <% end %>
+                  </div>
+                </li>
+
+                <li role="presentation" class="nav-item dropdown open">
+                  <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green">1</span>
+                  </a>
+                  <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                    <li class="nav-item">
+                      <a class="dropdown-item">
+                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>Victor Guedes</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Teste
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <div class="text-center">
+                        <a class="dropdown-item">
+                          <strong>Veja todos os alertas</strong>
+                          <i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="row">
+                <div class="col-lg-12">
+                    <%= yield %>
+                </div>
+                <!-- /.col-lg-12 -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Gerenciador de Municipes
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+        <%= form_with(url: admin_registration_path, model: current_admin, local: true, class:"form-horizontal form-label-left") do |form| %>
+          <div class="modal-header">
+              <h3 class="modal-title" id="myModalLabel">Avatar</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <%= image_tag(avatar_url, alt:"...", class:"img-profile rounded-circle", style:"width:100px", id:"imgAvatarLg") %>
+              <%= form.file_field :avatar %>
+            </div>
+            <p>Salve para ver o novo avatar!</p>
+          </div>
+          <div class="modal-footer">
+            <%= form.submit "Salvar", class:"btn btn-primary" %>
+          </div>
+        <% end %>
+        </div>
+      </div>
+    </div>
+    <!-- /Modal -->
+
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'admins_backoffice' %>
+
+    <% if notice %>
+      <%= javascript_tag do %>
+        $.bootstrapGrowl('<%= notice %>', {
+        ele: 'body', // which element to append to
+        type: 'success', // (null, 'info', 'error', 'success')
+        offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
+        align: 'right', // ('left', 'right', or 'center')
+        allow_dismiss: true,
+        stackup_spacing: 10 // spacing between consecutively stacked growls.
+        });
+      <% end %>
+    <% end %>
+  </body>
+</html>

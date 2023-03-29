@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="Victor Guedes">
+
+    <title>MunicipeManager</title>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application' %>
+    <%= stylesheet_link_tag 'site' %>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/navbars/">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <br>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded">
+        <%= link_to 'Gerenciador de Municipes', root_path, class:"navbar-brand" %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample09">
+          <ul class="navbar-nav mr-auto">
+          </ul>
+          <form class="form-inline my-2 my-md-0">
+            <% unless admin_signed_in? %>
+              <%= link_to 'Acesso Administrativo', new_admin_session_path, class:"nav-link" %>
+            <% else %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false", style="color:white;"> <%= current_admin.email %> </a>
+                <div class="dropdown-menu" aria-labelledby="dropdown09">
+                  <%= link_to admins_backoffice_welcome_index_path, class:"dropdown-item" do %>
+                    <i class="fa fa-user"></i> Area Administrativa
+                  <% end %>
+                  <hr class="navbar-divider">
+                  <%= link_to destroy_admin_session_path, class:"dropdown-item", method: :delete do %>
+                    <i class="fa fa-sign-out"></i> Sair
+                  <% end %>
+                </div>
+              </li>
+            <% end %>
+          </form>
+        </div>
+      </nav>
+
+      <main role="main">
+        <div class="jumbotron">
+          <div class="col-sm-8 mx-auto">
+              <%= yield %>
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'site' %>
+
+    <% if notice %>
+      <%= javascript_tag do %>
+        $.bootstrapGrowl('<%= notice %>', {
+        ele: 'body', // which element to append to
+        type: 'info', // (null, 'info', 'error', 'success')
+        offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
+        align: 'right', // ('left', 'right', or 'center')
+        allow_dismiss: true,
+        stackup_spacing: 10 // spacing between consecutively stacked growls.
+        });
+      <% end %>
+    <% end %> 
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">Faca seu registro de Municipe</h3>
+      <div class="row">
+        <% @municipe = @municipe.present? ? @municipe : Municipe.new %>
+        <% if @municipe.errors.any? %>
+          <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <ul>
+              <% @municipe.errors.full_messages.each do |message| %>
+                <li> <%= message %> </li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="col-lg-6">
+          <%= form_with(model: @municipe, local: true) do |form| %>
+            <div class="form-group">
+              <%= form.label :nome %>
+              <%= form.text_field :nome, class:"form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label :email %>
+              <%= form.text_field :email, class:"form-control", placeholder:"exemplo@exemplo.com" %>
+            </div>
+            <div class="form-group">
+              <%= form.label :cpf %>
+              <%= form.text_field :cpf, class:"form-control", placeholder:"formato: xxx.xxx.xxx-xx" %>
+            </div>
+            <div class="form-group">
+              <%= form.label :cns %>
+              <%= form.text_field :cns, class:"form-control", placeholder:"15 digitos" %>
+            </div>
+            <div class="form-group">
+              <%= form.label :data_nascimento %>
+              <%= form.date_field :data_nascimento, class:"form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label :telefone %>
+              <%= form.text_field :telefone, class:"form-control", placeholder:"cod. pais + DDD + numero" %>
+            </div>
+            <div class="form-group">
+              <%= form.label :status, class:"form-check-label" %>
+              <%= form.select :status, [["Ativo", true], ["Inativo", false]], selected: true %>
+            </div>
+            <div class="form-group">
+              <%= form.label :receber_emails, class:"form-check-label" %>
+              <%= form.check_box :receber_emails %>
+            </div>
+            <div class="form-group">
+              <%= form.label :municipio_id, class:"form-check-label" %>
+              <%= form.collection_select(:municipio_id, Municipio.where(estado: 'SP').order(:nome), :id, :nome, {}, { class:"form-control" }) %>
+            </div>
+            <div id="enderecos">
+              <%= form.fields_for :enderecos do |endereco| %>
+                <%= render partial: 'shared/endereco_fields', locals: { f: endereco } %>
+              <% end %>
+              <%= link_to_add_association 'Adicionar Endereco', form, :enderecos %>
+            </div>
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <%= link_to image_tag(municipe_avatar_url(@municipe), alt:"...", class:"img-profile rounded-circle", style:"width: 60px", id: "imgAvatarMd"), '#', "data-toggle":"modal", "data-target":"#avatarModal" %>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success">
+              Salvar
+            </button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+    <%= form_with(model: @municipe, local: true, class:"form-horizontal form-label-left") do |form| %>
+      <div class="modal-header">
+          <h3 class="modal-title" id="myModalLabel">Avatar</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <%= image_tag(municipe_avatar_url(@municipe), alt:"...", class:"img-profile rounded-circle", style:"width:100px", id:"imgAvatarLg") %>
+          <%= form.file_field :avatar %>
+        </div>
+        <p>Salve para ver o novo avatar!</p>
+      </div>
+      <div class="modal-footer">
+        <%= form.submit "Salvar", class:"btn btn-primary" %>
+      </div>
+    <% end %>
+    </div>
+  </div>
+</div>
+<!-- /Modal -->

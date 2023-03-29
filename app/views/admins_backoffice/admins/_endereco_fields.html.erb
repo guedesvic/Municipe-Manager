@@ -1,0 +1,32 @@
+<div class="nested-fields">
+  <div class="form-group">
+    <%= f.label :cep %>
+    <%= f.text_field :cep, class:"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :logradouro %>
+    <%= f.text_field :logradouro, class:"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :complemento %>
+    <%= f.text_field :complemento, class:"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :bairro %>
+    <%= f.text_field :bairro, class:"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :cidade %>
+    <%= f.text_field :cidade, class:"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :estado %>
+    <%= f.text_field :estado, class:"form-control", placeholder:"Siglas" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :ibge %>
+    <%= f.number_field :ibge, class:"form-control" %>
+  </div>
+
+  <%= link_to_remove_association('Remover Endereco', f) %>
+</div>

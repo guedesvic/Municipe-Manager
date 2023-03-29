@@ -1,0 +1,40 @@
+<h1>Seja bem vindo a plataforma <%= @municipe.email %>! </h1>
+
+<p>Recebemos o seu cadastro.</p>
+
+<p>Segue abaixo dados preenchidos em nossa ferramenta: </p>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nome</th>
+      <th>E-mail</th>
+      <th>CPF</th>
+      <th>CNS</th>
+      <th>Nascimento</th>
+      <th>Telefone</th>
+      <th>Status</th>
+      <th>Recebe e-mails</th>
+      <th>Municipio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @municipe.id %></td>
+      <td><%= @municipe.nome %></td>
+      <td><%= @municipe.email %></td>
+      <td><%= @municipe.cpf %></td>
+      <td><%= @municipe.cns %></td>
+      <td><%= @municipe.data_nascimento %></td>
+      <td><%= @municipe.telefone %></td>
+      <td><%= @municipe.status %></td>
+      <td><%= @municipe.receber_emails %></td>
+      <td><%= @municipe.municipio.nome %></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Caso tenha algum dado errado, entre em contato com a nossa central para atualizacao. </p>
+
+<p>Ate mais!</p>

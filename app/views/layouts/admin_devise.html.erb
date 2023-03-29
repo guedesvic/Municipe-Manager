@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="Victor Guedes" content="">
+
+    <title>MunicipeManager</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application' %>
+    <%= stylesheet_link_tag 'admin_devise' %>
+  </head>
+
+  <body class="bg-gradient-primary">
+    <div class="container">
+      <%= yield %>
+    </div>
+
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'admin_devise' %>
+    
+    <% unless resource.errors.empty? %>
+      <% resource.errors.full_messages.each do |msg| %>
+        <%= javascript_tag do %>
+          $.bootstrapGrowl('<%= msg %>', {
+          ele: 'body', // which element to append to
+          type: 'info', // (null, 'info', 'error', 'success')
+          offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
+          align: 'right', // ('left', 'right', or 'center')
+          allow_dismiss: true,
+          stackup_spacing: 10 // spacing between consecutively stacked growls.
+          });
+        <% end %>
+      <% end %>
+    <% end %> 
+  </body>
+</html>
