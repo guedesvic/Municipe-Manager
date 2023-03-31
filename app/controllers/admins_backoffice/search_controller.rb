@@ -1,7 +1,7 @@
 class AdminsBackoffice::SearchController < AdminsBackofficeController
 
   def municipes
-    @municipes = Municipe.search(params[:page],params[:term])
+    @municipes = Municipe.search(params[:term], page: params[:page], per_page: 10)
   end
 
   def filtered_municipios

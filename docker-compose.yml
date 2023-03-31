@@ -12,8 +12,36 @@ services:
     volumes:
       - .:/munipe_manager
     ports:
-      - "3000:3000"
+      - 3000:3000
     depends_on:
       - db
+      - elasticsearch
+    links:
+      - db
+      - elasticsearch
     tty: true
     stdin_open: true
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.3.0
+    container_name: elasticsearch
+    restart: always
+    environment:
+      discovery.type: single-node
+      bootstrap.memory_lock: "true"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - elasticsearch-data-volume:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+
+volumes:
+  elasticsearch-data-volume:
+    driver: local

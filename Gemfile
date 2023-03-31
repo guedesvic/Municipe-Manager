@@ -45,6 +45,10 @@ gem 'kaminari'
 gem 'cocoon'
 # Send sms
 gem 'twilio-ruby'
+# works aside elasticsearch
+gem 'searchkick'
+# Full-text search
+gem 'elasticsearch'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,4 +1,5 @@
 class Municipe < ApplicationRecord
+  searchkick
   
   belongs_to :municipio, inverse_of: :municipes
   has_many :enderecos, dependent: :delete_all
@@ -10,12 +11,6 @@ class Municipe < ApplicationRecord
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
 
   after_create :send_registered_municipe_mail
-
-  scope :search, ->(page,term) {
-    includes(:municipio)
-    .where("lower(municipes.nome) LIKE ?", "#{term.downcase}%")
-    .page(page)
-  }
 
   scope :registered_municipes, ->(page) {
     includes(:municipio)
